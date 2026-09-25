@@ -1,5 +1,6 @@
 from goblin import Goblin
 from hero import Hero
+from boss import Boss
 
 ARENA_NAME = "The Streets of Demopolis"
 
@@ -18,6 +19,20 @@ def battle(hero: Hero,enemy: Goblin):
         print(f"{enemy.name} wins!")
 
 
+def battleBoss(hero :Hero,enemy: Boss):
+    while hero.is_alive and Boss.is_alive():
+        hero_damage = hero.attack()
+        enemy.take_damage(hero_damage)
+
+        if hero.health < 100:
+            hero.health = hero.health - enemy.superMove
+            print(" Boss: YOU CANT STOP ME!!!")
+
+    if hero.is_alive():
+        print(f"{hero.name} wins!")
+    else:
+        print(f"{enemy.name} wins!")
+        
 
 
 def main():
@@ -29,16 +44,19 @@ def main():
     print("The Streets are opening...")
 
     goblin = Goblin("Richard")
-    
-
-    print(f"{goblin.name} enters the arena with {goblin.health} health.")
-
+    boss = Boss("Aiden")
     hedo = Hero("Mitchell")
 
-
+    print(f"{goblin.name} enters the arena with {goblin.health} health.")
     battle(hedo,goblin)
+
+    print(f"{boss.name} enters the arena with {boss.health} health.")
+    battle(boss,hedo)
+
+
 
 
 
 if __name__ == "__main__":
     main()
+    
